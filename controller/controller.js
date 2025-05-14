@@ -1,10 +1,19 @@
 const posts = require("../database/db");
 
+
 const index = (req, res) => {
+    const filterTags = req.query.tags;
+    console.log(filterTags);
+
+    let fileteredPosts = [...posts];
+    if(filterTags){
+        fileteredPosts = fileteredPosts.filter( post => post.tags.includes(filterTags));
+    }
+ 
     res.json({
-        status: 200,
-        data: posts
-    })
+        data: posts, 
+        status : 200
+    });
 };
 const show = (req, res) => {
     const id = parseInt(req.params.id);
