@@ -1,17 +1,14 @@
 const posts = require("../database/db");
 
-
 const index = (req, res) => {
     const filterTags = req.query.tags;
-    console.log(filterTags);
-
     let fileteredPosts = [...posts];
+
     if(filterTags){
         fileteredPosts = fileteredPosts.filter( post => post.tags.includes(filterTags));
     }
- 
     res.json({
-        data: posts, 
+        data: fileteredPosts, 
         status : 200
     });
 };

@@ -1,5 +1,3 @@
-const appPort = 3000;
-const appUrl =`http://localhost:${appPort}`;
 const posts = [
   {
     id: 1,

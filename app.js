@@ -1,11 +1,12 @@
 const express = require("express");
-const postRouter = require("./routers/posts");
-const {appPort, appUrl} = require("./database/db");
-const app = express();
+const postsRouter = require("./routers/posts");
 
+const app = express();
+const appPort = 3000;
+const appUrl =`http://localhost:${appPort}`;
 
 app.use(express.static("public"));
-app.use("/posts",postRouter);
+app.use("/posts", postsRouter);
 
 
 app.listen(appPort, () => {

@@ -1,7 +1,7 @@
 const express = require("express");
-
-const postController = require("../controller/controller");
 const router = express.Router();
+
+const postController = require("../controller/postController");
 
 router.get("/", postController.index);
 router.get("/:id", postController.show);
