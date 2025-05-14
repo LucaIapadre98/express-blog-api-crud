@@ -1,5 +1,5 @@
 const express = require("express");
-let{posts} = require("../data/db")
+let{posts} = require("../database/db")
 const router = express.Router();
 
 // #INDEX

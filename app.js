@@ -1,6 +1,6 @@
 const express = require("express");
 const postRouter = require("./routers/posts");
-const {appPort, appUrl} = require("./data/db");
+const {appPort, appUrl} = require("./database/db");
 const app = express();
 
 
