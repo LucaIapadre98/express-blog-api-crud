@@ -50,7 +50,7 @@ const modify = (req, res) =>{
 };
 const destroy = (req, res) => {
     const postId = parseInt(req.params.id);
-    const post = posts.find(post => post.id === postId);
+    const post = posts.find(post => post.id === id);
 
     if (!post) {
         res.status(404);
