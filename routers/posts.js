@@ -1,7 +1,7 @@
 const express = require("express");
 let {posts} = require("../database/db");
 
-const postController = require("../controlles/controlles");
+const postController = require("../controller/controller");
 const router = express.Router();
 
 router.get("/", postController.index);
