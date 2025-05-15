@@ -14,7 +14,7 @@ app.use("/posts", postRouter);
 
 app.listen(appPort, () => {
     console.log(`Ascolta il mio server ${appUrl}` ); 
-})
+});
 
 
 
