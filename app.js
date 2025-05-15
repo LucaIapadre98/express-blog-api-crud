@@ -7,6 +7,7 @@ const appUrl =`http://localhost:${appPort}`;
 
 app.use(express.static("public"));
 app.use("/posts", postRouter);
+app.use(express.json());
 
 
 app.listen(appPort, () => {
