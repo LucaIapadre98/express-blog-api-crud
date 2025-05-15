@@ -33,7 +33,6 @@ const show = (req, res) => {
 };
 const store = (req, res) =>{
     const {title, content, image,tags} = req.body;
-
     let maxId = 0;
     for (const post of posts){
         if(post.id > maxId) maxId = post.id;
@@ -47,11 +46,29 @@ const store = (req, res) =>{
     res.status(201).json(newPost)
 };
 const update = (req, res) =>{
-    const id = req.params.id;
-    res.json({
-        messagge:"Sostituzione di un post" + id,
-        data: posts
-    });
+    const {title, content, image, tags } = req.body;
+    const postId = parseInt(req.params.id);
+    const post = posts.find((post) => post.id === postId);
+
+    if(!post){
+        res.status(404);
+
+        res.json({
+            error:"404 No Found",
+            messagge:"post not found"
+        })
+        return;
+    }
+
+    const updatetPost = { id: postId, title, content, image, tags };
+
+    const postIndex = posts.indexOf(post);
+    console.log(postIndex);
+    
+    posts.splice(postIndex, 1, updatetPost);
+    res.json(updatetPost);
+    console.log(updatetPost);
+    
 };
 const modify = (req, res) =>{
     const id = req.params.id;
