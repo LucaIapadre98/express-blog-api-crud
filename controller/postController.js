@@ -2,8 +2,9 @@ const posts = require("../database/db");
 
 const index = (req, res) => {
     const filterTags = req.query.tags;
-    let fileteredPosts = [...posts];
 
+    let fileteredPosts = posts;
+    
     if(filterTags){
         fileteredPosts = fileteredPosts.filter( post => post.tags.includes(filterTags));
     }
@@ -15,24 +16,35 @@ const index = (req, res) => {
 const show = (req, res) => {
     const postId = parseInt(req.params.id);
     const post = posts.find(post => post.id === postId);
+
     if(!post){
         res.status(404);
         res.json({
             error:'404 Not Found',
-            messagge: 'Post non trovato'
+            messagge: 'Post not found'
         });
         return;
     }
+
     res.json({
         data: post,
         status: 200
     });
 };
 const store = (req, res) =>{
-    res.json({
-        messagge:"Creo un nuovo post",
-        data: posts
-    });
+    const {title, content, image,tags} = req.body;
+
+    let maxId = 0;
+    for (const post of posts){
+        if(post.id > maxId) maxId = post.id;
+    }
+
+    const postId = maxId + 1;
+    const newPost = {id:maxId + 1, title, content, image,tags};
+
+    posts.push(newPost);
+    
+    res.status(201).json(newPost)
 };
 const update = (req, res) =>{
     const id = req.params.id;
@@ -66,7 +78,6 @@ const destroy = (req, res) => {
 
     res.sendStatus(204);
 }
-
 
 module.exports = { 
     index,
