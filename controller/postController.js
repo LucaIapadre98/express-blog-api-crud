@@ -2,12 +2,12 @@ const { posts } = require("../database/db");
 
 const index = (req, res) => {
     const filterTags = req.query.tags;
-
     let fileteredPosts = posts;
     
     if(filterTags){
         fileteredPosts = fileteredPosts.filter( post => post.tags.includes(filterTags));
     }
+
     res.json({
         data: fileteredPosts, 
         status : 200
@@ -34,13 +34,13 @@ const show = (req, res) => {
 const store = (req, res) =>{
     const {title, content, image,tags} = req.body;
     let maxId = 0;
+
     for (const post of posts){
         if(post.id > maxId) maxId = post.id;
     }
 
     const postId = maxId + 1;
     const newPost = {id:maxId + 1, title, content, image,tags};
-
     posts.push(newPost);
 
     res.status(201).json(newPost)
@@ -71,11 +71,34 @@ const update = (req, res) =>{
     
 };
 const modify = (req, res) =>{
-    const id = req.params.id;
-    res.json({
-        messagge:"Modifica di un post" + id,
-        data: posts
-    });
+    const postId = parseInt(req.params.id);
+    const originalPost = posts.find((post) => post.id === postId);
+
+      if(!originalPost){
+        res.status(404);
+
+        res.json({
+            error:"404 No Found",
+            messagge:"post not found"
+        })
+        return;
+    }
+    
+    const {title, content, image, tags } = req.body;
+
+    if(title){
+        originalPost.title = title;
+    }
+
+    if(content){
+        originalPost.content= content;
+    }
+
+    if(tags){
+        originalPost.tags = tags;
+    }
+    res.json(originalPost);
+
 };
 const destroy = (req, res) => {
     const postId = parseInt(req.params.id);
