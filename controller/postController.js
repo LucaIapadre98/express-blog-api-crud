@@ -1,4 +1,4 @@
-const posts = require("../database/db");
+const { posts } = require("../database/db");
 
 const index = (req, res) => {
     const filterTags = req.query.tags;
@@ -43,7 +43,7 @@ const store = (req, res) =>{
     const newPost = {id:maxId + 1, title, content, image,tags};
 
     posts.push(newPost);
-    
+
     res.status(201).json(newPost)
 };
 const update = (req, res) =>{
